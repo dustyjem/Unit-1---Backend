@@ -95,7 +95,7 @@ nav ul li a:hover {
 /* Link Styles */
 a {
   text-decoration: none;
-  color: white;
+  color: rgb(24, 17, 17);
 }
 
 /* Welcome Section Styles */
@@ -177,6 +177,7 @@ a {
 
 .upg a {
   text-align: center;
+  color: #02b4d5;
 }
 
 /* Media Query Styles for Larger Screens */
@@ -240,4 +241,32 @@ a {
     background-color: rgba(0, 255, 187, 0.1);
    
   }
+}
+
+/* Car grid sections*/
+
+.car-grid {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 20px; /* Adjust the gap between cars as needed */
+}
+
+.car-grid li {
+  list-style-type: none; /* Remove the default list item marker (bullet point) */
+  border: 1px solid #ccc;
+  border-radius: 10px; /* Add rounded borders */
+  padding: 10px;
+  display: flex; /* Center contents vertically and horizontally */
+  flex-direction: column; /* Stack image and text vertically */
+  align-items: center; /* Center contents horizontally */
+}
+
+.car-grid img {
+  max-width: 100%;
+  height: auto;
+}
+
+.namePrice {
+  margin-top: 10px;
 }

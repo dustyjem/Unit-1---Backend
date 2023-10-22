@@ -18,4 +18,35 @@ invCont.buildByClassificationId = async function (req, res, next) {
   })
 }
 
+/* ***************************
+ *  Build vehicle details by vehicle view
+ * ************************** */
+invCont.BuildByVehicleId = async function (req, res, next) {
+  const vehicle_id = req.params.vehicleId
+  const data = await invModel.getInventoryById(vehicle_id)
+  const grid = await utilities.buildVehicleHtml(data)
+  let nav = await utilities.getNav()
+  res.render("./inventory/inventory", {
+    title: data.inv_year + ' ' + data.inv_make + ' ' + data.inv_model,
+    nav,
+    grid,
+  })
+}
+
+
+/* ***************************
+ *  Build Add Classification View
+ *  Assignment 4
+ * ************************** */
+invCont.BuildAddClassification = async function (req, res, next) {
+  let nav = await utilities.getNav()
+  res.render("./inventory/add-classification", {
+    title: "Add Classification",
+    nav,
+    errors: null,
+  })
+}
+
+
+
 module.exports = invCont

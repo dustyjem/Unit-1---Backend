@@ -1,0 +1,13 @@
+<%- include('partials/head') %>
+<%- include('partials/header') %>
+
+<div class="car-detail">
+  <img src="<%= carDetails.image %>" alt="<%= carDetails.make %> <%= carDetails.model %>">
+  <h2><%= carDetails.make %> <%= carDetails.model %></h2>
+  <p>Price: $<%= carDetails.price %></p>
+  <p>Description: <%= carDetails.description %></p>
+  <p>Color: <%= carDetails.color %></p>
+  <p>Miles: <%= carDetails.miles %> miles</p>
+</div>
+
+<%- include('partials/navigation') %>
