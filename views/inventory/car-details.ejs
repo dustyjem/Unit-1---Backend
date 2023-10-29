@@ -1,13 +1,9 @@
-<%- include('partials/head') %>
-<%- include('partials/header') %>
+<!-- Content Heading -->
 
-<div class="car-detail">
-  <img src="<%= carDetails.image %>" alt="<%= carDetails.make %> <%= carDetails.model %>">
-  <h2><%= carDetails.make %> <%= carDetails.model %></h2>
-  <p>Price: $<%= carDetails.price %></p>
-  <p>Description: <%= carDetails.description %></p>
-  <p>Color: <%= carDetails.color %></p>
-  <p>Miles: <%= carDetails.miles %> miles</p>
-</div>
+<% if (title) { %>
+    <h1><%= title %></h1>
+    <% } else {
+      res.redirect('/')
+    } %>
 
-<%- include('partials/navigation') %>
+<%- grid %>
