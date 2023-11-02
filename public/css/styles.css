@@ -48,7 +48,7 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .siteName a:hover, #tools a:hover {
-  color: #5e5def;
+  color: #00f5c0;
   opacity: 0.7;
   transform: scale(1.5);
 }
@@ -74,8 +74,9 @@ nav ul, nav ul li a {
   text-decoration: none;
 }
 
-nav ul li:hover {
-  background-color: #00f5c0; /* Change background color on hover */
+nav ul, nav ul li a:hover {
+  /* background-color: #00f5c0; Change background color on hover */
+  color: #00f5c0;
 }
 
 #welcome {
