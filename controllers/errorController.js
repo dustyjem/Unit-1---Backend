@@ -9,3 +9,4 @@ errorController.throwError = async(req, res, next) =>{
 }
  
 module.exports = errorController;
+

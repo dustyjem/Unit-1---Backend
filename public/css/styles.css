@@ -270,3 +270,76 @@ li:hover {
     align-items: center;
   }
 }
+
+/* LOGIN AND REGISTER PAGES */
+.login-title {
+  font-size: 2.2em;
+}
+.form-box {
+  display: grid;
+    grid-template-columns: 100%;
+    background-color: #5e5def;
+    text-align: left;
+    padding: 25px;
+    margin: auto;
+    max-width: 600px;
+    border-radius: 10px;
+}
+.form-box div {
+  display: flex;
+  flex-direction: column;
+  padding-top: 5px;
+}
+.fname {
+  font-size: 1.2em;
+  padding: 10px 0px 10px 0px;
+}
+.lname {
+  font-size: 1.2em;
+  padding: 10px 0px 10px 0px;
+}
+.email {
+  font-size: 1.2em;
+  padding: 10px 0px 10px 0px;
+}
+.password {
+  font-size: 1.2em;
+  padding: 10px 0px 10px 0px;
+}
+
+form input {
+  margin-top: 8px;
+  font-size: 14px;
+  border: none;
+  padding: 6px;
+}
+.form-btn {
+  background-color: white;
+  margin-top: 15px;
+  padding: 5px 20px 5px 20px;
+  border: none;
+  font-size: 1rem;
+  transition: .15s;
+}
+.form-btn:hover {
+  background-color: #5e5def;
+  color: white;
+  transition: .15s;
+}
+
+.register {
+  padding-top: 20px;
+  font-size: 1em;
+  display: flex;
+}
+.register a {
+  text-decoration: underline;
+  transition: .15s;
+}
+.register a:hover {
+  color: white;
+  transition: .15s;
+}
+.password p {
+  font-size: 15px;
+}
