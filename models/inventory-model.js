@@ -1,10 +1,10 @@
-const pool = require("../database");
+const pool = require("../database/")
 
 /* ***************************
  *  Get all classification data
  * ************************** */
-async function getClassifications() {
-  return await pool.query("SELECT * FROM public.classification ORDER BY classification_name");
+async function getClassifications(){
+  return await pool.query("SELECT * FROM public.classification ORDER BY classification_name")
 }
 
 /* ***************************
@@ -13,28 +13,30 @@ async function getClassifications() {
 async function getInventoryByClassificationId(classification_id) {
   try {
     const data = await pool.query(
-      `SELECT * FROM public.inventory AS i 
-      JOIN public.classification AS c 
-      ON i.classification_id = c.classification_id 
-      WHERE i.classification_id = $1`,
+      "SELECT * FROM public.inventory AS i JOIN public.classification AS c ON i.classification_id = c.classification_id WHERE i.classification_id = $1",
       [classification_id]
-    );
-    return data.rows;
+    )
+    return data.rows
   } catch (error) {
-    console.error("getclassificationsbyid error " + error);
+    console.error("getclassificationsbyid error " + error)
   }
 }
 
+
 /* ***************************
- * Get car details by car ID
+ *  Get all data for a specific vehicle by vehicle ID
  * ************************** */
 async function getInventoryById(vehicle_id) {
   const query = "SELECT * FROM public.inventory WHERE inv_id = $1";
   const data = await pool.query(query, [vehicle_id]);
-  return data.rows;
+  return data.rows[0];
 }
 
 
+/* ***************************
+ *  Insert new classification into the database
+ *  Unit 4 Assignment
+ * ************************** */
 async function addClassification(add_classification){
   try {
     const sql = "INSERT INTO classification (classification_name) VALUES ($1)";
@@ -44,6 +46,11 @@ async function addClassification(add_classification){
   }
 }
 
+
+/* ***************************
+ *  Check if the classification name is already in the database
+ *  Unit 4 Assignment
+ * ************************** */
 async function checkExistingClassification(add_classification){
   try {
     const sql = "SELECT * FROM public.classification WHERE classification_name = $1"
@@ -54,10 +61,26 @@ async function checkExistingClassification(add_classification){
   }
 }
 
+/* ***************************
+ *  Get the classifications by id
+ *  Unit 4 Assignment
+ * ************************** */
 async function getClassificationsById(){
-  return await pool.query("SELECT * FROM public.classification ORDER BY classification_name")
+    return await pool.query("SELECT * FROM public.classification ORDER BY classification_name")
 }
 
+// Trying to make the select sticky
+// async function getClassificationsById(classification_id) {
+//   const query = "SELECT * FROM public.classification WHERE classification_id = $1";
+//   const data = await pool.query(query, [classification_id]);
+//   return data.rows[0];
+// }
+
+
+/* ***************************
+ *  Insert new inventory item into the database
+ *  Unit 4 Assignment
+ * ************************** */
 async function addInventory(inv_make, inv_model, inv_year, inv_description, inv_image, inv_thumbnail, inv_price, inv_miles, inv_color, classification_id){
   try {
     const sql = "INSERT INTO public.inventory (inv_make, inv_model, inv_year, inv_description, inv_image, inv_thumbnail, inv_price, inv_miles, inv_color, classification_id) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10)";
@@ -78,6 +101,9 @@ async function addInventory(inv_make, inv_model, inv_year, inv_description, inv_
   }
 }
 
+/* ***************************
+ *  Update Inventory Data
+ * ************************** */
 async function updateInventory(
   inv_id,
   inv_make,
@@ -114,4 +140,32 @@ async function updateInventory(
 }
 
 
-module.exports = { getClassifications, getInventoryByClassificationId, getInventoryById, checkExistingClassification, addClassification, getClassificationsById,  addInventory, updateInventory};
+/* ***************************
+ *  Delete Inventory Item
+ *  Unit 5 - Delete activity
+ * ************************** */
+async function deleteInventoryItem(inv_id) {
+  try {
+    const sql = 'DELETE FROM inventory WHERE inv_id = $1'
+    const data = await pool.query(sql, [inv_id])
+  return data
+  } catch (error) {
+    new Error("Delete Inventory Error")
+  }
+}
+
+
+
+module.exports = {
+  getClassifications, 
+  getInventoryByClassificationId, 
+  getInventoryById, 
+  addClassification, 
+  checkExistingClassification,
+  getClassificationsById,
+  addInventory,
+  updateInventory,
+  deleteInventoryItem
+};
+
+

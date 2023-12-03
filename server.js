@@ -16,21 +16,11 @@ const utilities = require('./utilities/');
 const session = require("express-session")
 const pool = require('./database/')
 const bodyParser = require("body-parser")
+const cookieParser = require("cookie-parser")
  
-/* ***********************
- * View Engine and Templates
- *************************/
-
 /* ***********************
  * Middleware
  * ************************/
-
-app.use(require('connect-flash')())
-app.use(function(req, res, next){
-  res.locals.messages = require('express-messages')(req, res)
-  next()
-})
-
 app.use(session({
   store: new (require('connect-pg-simple')(session))({
     createTableIfMissing: true,
@@ -42,37 +32,57 @@ app.use(session({
   name: 'sessionId',
 }))
 
+// Express Messages Middleware
+app.use(require('connect-flash')())
+app.use(function(req, res, next){
+  res.locals.messages = require('express-messages')(req, res)
+  next()
+})
+
+// for parsing application/x-www-form-urlencoded
+app.use(bodyParser.json())
+app.use(bodyParser.urlencoded({ extended: true })) 
+
+// Unit 5 Login JWT and Cookie
+app.use(cookieParser())
+
+// Unit 5 Login JWT and Cookie
+app.use(utilities.checkJWTToken)
+
+
+/* ***********************
+ * View Engine and Templates
+ *************************/
 app.set("view engine", "ejs")
 app.use(expressLayouts)
-app.set("layout", "./layouts/layout") 
+app.set("layout", "./layouts/layout") // not at views root
 
 
-// Body-Parser functionality
-app.use(bodyParser.json())
-app.use(bodyParser.urlencoded({extended: true}))
- 
+
 /* ***********************
  * Routes
  *************************/
-app.use(utilities.handleErrors(static))
- 
+app.use(require("./routes/static"))
+
 // Index route
 app.get("/", utilities.handleErrors(baseController.buildHome))
- 
-// Inventory routes
-app.use("/inv", utilities.handleErrors(inventoryRoute))
- 
-// error page route
-app.use(utilities.handleErrors(require('./routes/errorRoute')))
 
-// Account routes
+// Inventory routes - Unit 3 
+app.use("/inv", utilities.handleErrors(require("./routes/inventoryRoute")))
+
+// Account routes - Unit 4 Activity
 app.use("/account", require("./routes/accountRoute"))
- 
-// File Not Found Route - must be last route in list
+
+
+// Error Route (For testing and Assignment 3)
+app.get("/error", utilities.handleErrors(baseController.buildError))
+
+// File Not Found Route 
+// Must be last route in list
 app.use(async (req, res, next) => {
   next({status: 404, message: 'Sorry, we appear to have lost that page.'})
 })
- 
+
 
 /* ***********************
 * Express Error Handler
@@ -88,15 +98,15 @@ app.use(async (err, req, res, next) => {
     nav
   })
 })
- 
- 
+
+
 /* ***********************
  * Local Server Information
  * Values from .env (environment) file
  *************************/
 const port = process.env.PORT
 const host = process.env.HOST
- 
+
 /* ***********************
  * Log statement to confirm server operation
  *************************/
